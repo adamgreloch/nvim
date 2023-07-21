@@ -18,3 +18,7 @@ keymap.set("n", "<C-l>", "<C-w>l")
 
 -- Switch between two last buffers quickly
 keymap.set("n", "<leader>b", "<C-^>")
+
+-- Open journal entry
+keymap.set("n", "<leader>oj", "<cmd>JournalOpen<cr>")
+

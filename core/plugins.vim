@@ -52,3 +52,6 @@ call wilder#set_option('renderer', wilder#popupmenu_renderer(wilder#popupmenu_bo
       \ },
       \ 'border': 'rounded',
       \ })))
+
+" vim-gnupg
+let g:GPGDefaultRecipients = ['zplhatesbananas@gmail.com']

@@ -129,12 +129,16 @@ end
 -- end
 
 if utils.executable("jdtls") then
-  lspconfig.jdtls.setup{}
+  lspconfig.jdtls.setup{
+    on_attach = custom_attach,
+    capabilities = capabilities,
+  }
 end
 
 if utils.executable("solidity-ls") then
   lspconfig.solidity.setup{
     on_attach = custom_attach,
+    capabilities = capabilities,
   }
 end
 

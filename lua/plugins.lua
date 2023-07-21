@@ -64,6 +64,7 @@ packer.startup {
 
     use {
       "nvim-treesitter/nvim-treesitter",
+      after = "nvim-lspconfig",
       event = "BufEnter",
       run = ":TSUpdate",
       config = [[require('config.treesitter')]],
@@ -119,6 +120,8 @@ packer.startup {
     }
 
     use { "gelguy/wilder.nvim", opt = true, setup = [[vim.cmd('packadd wilder.nvim')]] }
+
+    use { "jamessan/vim-gnupg" }
   end,
   config = {
     max_jobs = 16,
