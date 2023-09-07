@@ -48,7 +48,7 @@ packer.startup {
 
     use { "williamboman/mason-lspconfig.nvim" }
 
-    use { "onsails/lspkind-nvim", event = "VimEnter" }
+    use { "onsails/lspkind-nvim" }
     -- auto-completion engine
     use { "hrsh7th/nvim-cmp", after = "lspkind-nvim", config = [[require('config.nvim-cmp')]] }
 
@@ -112,6 +112,8 @@ packer.startup {
       "folke/trouble.nvim",
       config = [[require('config.trouble')]]
     }
+
+    use { "sbdchd/neoformat" }
 
     use {
       'phaazon/hop.nvim',

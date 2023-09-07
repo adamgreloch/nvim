@@ -5,6 +5,8 @@ local lsp = vim.lsp
 local diagnostic = vim.diagnostic
 
 local utils = require("utils")
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local lspconfig = require("lspconfig")
 
 local custom_attach = function(client, bufnr)
   -- Mappings.
@@ -15,18 +17,20 @@ local custom_attach = function(client, bufnr)
     keymap.set(mode, l, r, opts)
   end
 
+  map("n", "gD", vim.lsp.buf.declaration, { desc = "go to declaration" })
   map("n", "gd", vim.lsp.buf.definition, { desc = "go to definition" })
+  map("n", "gi", vim.lsp.buf.implementation, { desc = "go to implementation" })
   map("n", "<C-]>", vim.lsp.buf.definition)
   map("n", "K", vim.lsp.buf.hover)
   map("n", "<C-k>", vim.lsp.buf.signature_help)
-  map("n", "<space>rn", vim.lsp.buf.rename, { desc = "variable rename" })
+  map("n", "<leader>R", vim.lsp.buf.rename, { desc = "variable rename" })
   map("n", "gr", vim.lsp.buf.references, { desc = "show references" })
   map("n", "[d", diagnostic.goto_prev, { desc = "previous diagnostic" })
   map("n", "]d", diagnostic.goto_next, { desc = "next diagnostic" })
-  map("n", "<space>q", diagnostic.setqflist, { desc = "put diagnostic to qf" })
-  map("n", "<space>ca", vim.lsp.buf.code_action, { desc = "LSP code action" })
-  map("n", "<space>wa", vim.lsp.buf.add_workspace_folder, { desc = "add workspace folder" })
-  map("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, { desc = "remove workspace folder" })
+  map("n", "<leader>q", diagnostic.setqflist, { desc = "put diagnostic to qf" })
+  map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP code action" })
+  -- map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, { desc = "add workspace folder" })
+  -- map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, { desc = "remove workspace folder" })
 
   -- Set some key bindings conditional on server capabilities
   if client.server_capabilities.documentFormattingProvider then
@@ -91,9 +95,7 @@ local custom_attach = function(client, bufnr)
   end
 end
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-local lspconfig = require("lspconfig")
+lspconfig.util.default_config.on_attach = custom_attach;
 
 if utils.executable("pylsp") then
   lspconfig.pylsp.setup {
@@ -161,9 +163,6 @@ if utils.executable("clangd") then
     on_attach = custom_attach,
     capabilities = capabilities,
     filetypes = { "c", "cpp", "cc" },
-    flags = {
-      debounce_text_changes = 500,
-    },
   }
 end
 

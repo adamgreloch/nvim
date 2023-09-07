@@ -29,3 +29,9 @@ autocmd BufEnter * set formatoptions-=ro
 
 " Switch cwd automatically to current file's dir
 autocmd BufEnter * silent! lcd %:p:h
+
+" Autoformat cpp files on save
+" augroup fmt
+"   autocmd!
+"   autocmd BufWritePre *.cpp Neoformat
+" augroup END
