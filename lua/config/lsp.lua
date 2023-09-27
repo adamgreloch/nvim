@@ -117,18 +117,14 @@ if utils.executable("pylsp") then
     },
     capabilities = capabilities,
   }
-else
-  vim.notify("pylsp not found!", vim.log.levels.WARN, { title = "Nvim-config" })
 end
 
--- if utils.executable('pyright') then
---   lspconfig.pyright.setup{
---     on_attach = custom_attach,
---     capabilities = capabilities
---   }
--- else
---   vim.notify("pyright not found!", vim.log.levels.WARN, {title = 'Nvim-config'})
--- end
+if utils.executable('pyright') then
+  lspconfig.pyright.setup{
+    on_attach = custom_attach,
+    capabilities = capabilities
+  }
+end
 
 if utils.executable("jdtls") then
   lspconfig.jdtls.setup{
@@ -175,8 +171,6 @@ if utils.executable("vim-language-server") then
     },
     capabilities = capabilities,
   }
-else
-  vim.notify("vim-language-server not found!", vim.log.levels.WARN, { title = "Nvim-config" })
 end
 
 -- set up bash-language-server
