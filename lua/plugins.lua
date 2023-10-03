@@ -126,6 +126,7 @@ packer.startup {
     use { "jamessan/vim-gnupg" }
 
     use { "whonore/Coqtail" }
+    use { "lervag/vimtex" }
   end,
   config = {
     max_jobs = 16,
