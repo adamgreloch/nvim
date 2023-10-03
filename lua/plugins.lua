@@ -124,6 +124,8 @@ packer.startup {
     use { "gelguy/wilder.nvim", opt = true, setup = [[vim.cmd('packadd wilder.nvim')]] }
 
     use { "jamessan/vim-gnupg" }
+
+    use { "whonore/Coqtail" }
   end,
   config = {
     max_jobs = 16,

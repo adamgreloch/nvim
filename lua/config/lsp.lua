@@ -133,6 +133,13 @@ if utils.executable("jdtls") then
   }
 end
 
+if utils.executable("ocaml-lsp") then
+  lspconfig.ocamllsp.setup{
+    on_attach = custom_attach,
+    capabilities = capabilities,
+  }
+end
+
 if utils.executable("solidity-ls") then
   lspconfig.solidity.setup{
     on_attach = custom_attach,
