@@ -126,7 +126,26 @@ packer.startup {
     use { "jamessan/vim-gnupg" }
 
     use { "whonore/Coqtail" }
+
     use { "lervag/vimtex" }
+
+    use { "rust-lang/rust.vim" }
+
+    use {
+      "simrat39/rust-tools.nvim",
+      after = "nvim-lspconfig",
+      config = [[require('config.rust-tools')]],
+    }
+
+    use {
+      "mfussenegger/nvim-dap",
+      config = [[require('config.nvim-dap')]]
+    }
+
+    use {
+      "voldikss/vim-floaterm",
+      config = [[require('config.floaterm')]]
+    }
   end,
   config = {
     max_jobs = 16,

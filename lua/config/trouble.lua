@@ -5,4 +5,4 @@ trouble.setup {
     use_diagnostic_signs = true,
 }
 
-vim.keymap.set("n", "<leader>t", "<cmd>TroubleToggle<cr>", {desc = "Toggle Trouble"})
+vim.keymap.set("n", "<space>e", "<cmd>TroubleToggle<cr>", {desc = "Toggle Trouble"})

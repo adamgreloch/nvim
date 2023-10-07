@@ -7,6 +7,7 @@ local diagnostic = vim.diagnostic
 local utils = require("utils")
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local lspconfig = require("lspconfig")
+local lsputil = require "lspconfig/util"
 
 local custom_attach = function(client, bufnr)
   -- Mappings.
