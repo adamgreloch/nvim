@@ -1,4 +1,6 @@
 local rt = require("rust-tools")
+local api = vim.api
+local keymap = vim.keymap
 
 local opts = {
   tools = { -- rust-tools options
@@ -48,7 +50,7 @@ local opts = {
       right_align_padding = 7,
 
       -- The color of the hints
-      highlight = "Comment",
+      highlight = "NonText",
     },
 
     -- options same as lsp hover / vim.lsp.util.open_floating_preview()
@@ -56,16 +58,7 @@ local opts = {
 
       -- the border that is used for the hover window
       -- see vim.api.nvim_open_win()
-      border = {
-        { "╭", "FloatBorder" },
-        { "─", "FloatBorder" },
-        { "╮", "FloatBorder" },
-        { "│", "FloatBorder" },
-        { "╯", "FloatBorder" },
-        { "─", "FloatBorder" },
-        { "╰", "FloatBorder" },
-        { "│", "FloatBorder" },
-      },
+      border = "rounded",
 
       -- Maximal width of the hover window. Nil means no max.
       max_width = nil,
@@ -176,6 +169,7 @@ local opts = {
 
         cargo = {
           loadOutDirsFromCheck = true,
+          sysroot = "discover",
         },
 
         checkOnSave = {
@@ -185,6 +179,7 @@ local opts = {
         procMacro = {
           enable = true,
         },
+
         diagnostics = {
           enable = true,
           disabled = { "unresolved-proc-macro" },
@@ -195,11 +190,48 @@ local opts = {
     },
     on_attach = function(_, bufnr)
       -- Hover actions
-      vim.keymap.set("n", "K", rt.hover_actions.hover_actions, { buffer = bufnr })
+      keymap.set("n", "K", rt.hover_actions.hover_actions, { buffer = bufnr })
       -- Code action groups
-      vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+      keymap.set("n", "<space>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+      keymap.set("n", "<space>d", "<cmd>RustDebuggables<cr>", {desc = "Debug Rust"})
+      keymap.set("n", "<space>r", "<cmd>RustRunnables<cr>", {desc = "Run Rust"})
+
+      keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "go to declaration" })
+      keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "go to definition" })
+      keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "go to implementation" })
+      keymap.set("n", "<C-k>", vim.lsp.buf.signature_help)
+      keymap.set("n", "<leader>R", vim.lsp.buf.rename, { desc = "variable rename" })
+      keymap.set("n", "gr", vim.lsp.buf.references, { desc = "show references" })
+      keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "previous diagnostic" })
+      keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "next diagnostic" })
+
+      api.nvim_create_autocmd("CursorHold", {
+        buffer = bufnr,
+        callback = function()
+          local float_opts = {
+            focusable = false,
+            close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+            border = "rounded",
+            source = "always", -- show source in diagnostic popup window
+            prefix = " ",
+          }
+
+          if not vim.b.diagnostics_pos then
+            vim.b.diagnostics_pos = { nil, nil }
+          end
+
+          local cursor_pos = api.nvim_win_get_cursor(0)
+          if (cursor_pos[1] ~= vim.b.diagnostics_pos[1] or cursor_pos[2] ~= vim.b.diagnostics_pos[2])
+              and #vim.diagnostic.get() > 0
+          then
+            vim.diagnostic.open_float(nil, float_opts)
+          end
+
+          vim.b.diagnostics_pos = cursor_pos
+        end,
+      })
     end,
-  }, -- rust-analyzer options
+  },
 
   -- debugging stuff
   dap = {
@@ -213,5 +245,3 @@ local opts = {
 
 rt.setup(opts)
 
-vim.keymap.set("n", "<space>d", "<cmd>RustDebuggables<cr>", {desc = "Debug Rust"})
-vim.keymap.set("n", "<space>r", "<cmd>RustRunnables<cr>", {desc = "Run Rust"})

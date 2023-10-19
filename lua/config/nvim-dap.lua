@@ -7,7 +7,7 @@ local function open_sidebar()
 end
 
 vim.keymap.set("n", "<leader>t", "<cmd>DapToggleBreakpoint<cr>", {desc = "Toggle breakpoint"})
-vim.keymap.set("n", "<space>p", open_sidebar, {desc = "Open scope sidebar"})
+vim.keymap.set("n", "<space>b", open_sidebar, {desc = "Open scope sidebar"})
 vim.keymap.set("n", "<space>s", "<cmd>DapStepOver<cr>", {desc = "Step over"})
 vim.keymap.set("n", "<space>i", "<cmd>DapStepInto<cr>", {desc = "Step into"})
 vim.keymap.set("n", "<space>o", "<cmd>DapStepOut<cr>", {desc = "Step into"})

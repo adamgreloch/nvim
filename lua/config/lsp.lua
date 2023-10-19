@@ -9,6 +9,8 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local lspconfig = require("lspconfig")
 local lsputil = require "lspconfig/util"
 
+keymap.set("n", "<space>f", vim.lsp.buf.format, { desc = "format code" })
+
 local custom_attach = function(client, bufnr)
   -- Mappings.
   local map = function(mode, l, r, opts)
@@ -32,11 +34,6 @@ local custom_attach = function(client, bufnr)
   map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP code action" })
   -- map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, { desc = "add workspace folder" })
   -- map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, { desc = "remove workspace folder" })
-
-  -- Set some key bindings conditional on server capabilities
-  if client.server_capabilities.documentFormattingProvider then
-    map("n", "<space>f", vim.lsp.buf.format, { desc = "format code" })
-  end
 
   api.nvim_create_autocmd("CursorHold", {
     buffer = bufnr,
@@ -73,18 +70,18 @@ local custom_attach = function(client, bufnr)
     ]])
 
     local gid = api.nvim_create_augroup("lsp_document_highlight", { clear = true })
-    api.nvim_create_autocmd("CursorHold" , {
+    api.nvim_create_autocmd("CursorHold", {
       group = gid,
       buffer = bufnr,
-      callback = function ()
+      callback = function()
         lsp.buf.document_highlight()
       end
     })
 
-    api.nvim_create_autocmd("CursorMoved" , {
+    api.nvim_create_autocmd("CursorMoved", {
       group = gid,
       buffer = bufnr,
-      callback = function ()
+      callback = function()
         lsp.buf.clear_references()
       end
     })
@@ -121,28 +118,27 @@ if utils.executable("pylsp") then
 end
 
 if utils.executable('pyright') then
-  lspconfig.pyright.setup{
+  lspconfig.pyright.setup {
     on_attach = custom_attach,
     capabilities = capabilities
   }
 end
 
 if utils.executable("jdtls") then
-  lspconfig.jdtls.setup{
+  lspconfig.jdtls.setup {
     on_attach = custom_attach,
     capabilities = capabilities,
   }
 end
 
-if utils.executable("ocaml-lsp") then
-  lspconfig.ocamllsp.setup{
-    on_attach = custom_attach,
-    capabilities = capabilities,
-  }
-end
+-- lspconfig.ocamllsp.setup{
+--   on_attach = custom_attach,
+--   capabilities = capabilities,
+--   root_dir = lsputil.root_pattern("Makefile", "*.opam", "esy.json", "package.json", ".git", "dune-project", "dune-workspace"),
+-- }
 
 if utils.executable("solidity-ls") then
-  lspconfig.solidity.setup{
+  lspconfig.solidity.setup {
     on_attach = custom_attach,
     capabilities = capabilities,
   }
@@ -159,7 +155,7 @@ if utils.executable("ltex-ls") then
       },
     },
     flags = { debounce_text_changes = 300 },
-}
+  }
 end
 
 if utils.executable("clangd") then
@@ -222,7 +218,7 @@ end
 
 -- global config for diagnostic
 diagnostic.config {
-  underline = false,
+  underline = true,
   virtual_text = false,
   signs = true,
   severity_sort = true,

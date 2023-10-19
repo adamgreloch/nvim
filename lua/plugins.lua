@@ -146,11 +146,20 @@ packer.startup {
       "voldikss/vim-floaterm",
       config = [[require('config.floaterm')]]
     }
+
+    use {
+      "nvim-neo-tree/neo-tree.nvim",
+      requires = {
+        "nvim-lua/plenary.nvim",
+        "MunifTanjim/nui.nvim",
+      },
+      config = [[require('config.neo-tree')]],
+    }
   end,
   config = {
     max_jobs = 16,
     compile_path = packer_util.join_paths(fn.stdpath("data"), "site", "lua",
-    "packer_compiled.lua"),
+      "packer_compiled.lua"),
   },
 }
 

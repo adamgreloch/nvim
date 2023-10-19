@@ -3,6 +3,7 @@ require("nvim-treesitter.configs").setup {
   ignore_install = {}, -- List of parsers to ignore installing
   indent = {
     enable = true,
+    disable = { "rust" },
   },
   highlight = {
     enable = true, -- false will disable the whole extension

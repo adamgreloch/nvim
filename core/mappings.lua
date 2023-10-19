@@ -22,3 +22,6 @@ keymap.set("n", "<leader>b", "<C-^>")
 -- Open journal entry
 keymap.set("n", "<leader>oj", "<cmd>JournalOpen<cr>")
 
+-- Move between buffers
+keymap.set("n", "<space>q", "<cmd>bn<cr>")
+keymap.set("n", "<space>p", "<cmd>bp<cr>")
