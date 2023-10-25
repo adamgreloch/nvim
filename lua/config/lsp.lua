@@ -11,6 +11,8 @@ local lsputil = require "lspconfig/util"
 
 keymap.set("n", "<space>f", vim.lsp.buf.format, { desc = "format code" })
 
+vim.lsp.set_log_level("off") -- disable logging for improved performance
+
 local custom_attach = function(client, bufnr)
   -- Mappings.
   local map = function(mode, l, r, opts)

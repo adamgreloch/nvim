@@ -192,18 +192,18 @@ local opts = {
       -- Hover actions
       keymap.set("n", "K", rt.hover_actions.hover_actions, { buffer = bufnr })
       -- Code action groups
-      keymap.set("n", "<space>a", rt.code_action_group.code_action_group, { buffer = bufnr })
-      keymap.set("n", "<space>d", "<cmd>RustDebuggables<cr>", {desc = "Debug Rust"})
-      keymap.set("n", "<space>r", "<cmd>RustRunnables<cr>", {desc = "Run Rust"})
+      keymap.set("n", "<space>a", rt.code_action_group.code_action_group, { buffer = bufnr, desc = "Code actions" })
+      keymap.set("n", "<space>d", "<cmd>RustDebuggables<cr>", { desc = "Debug Rust" })
+      keymap.set("n", "<space>r", "<cmd>RustRunnables<cr>", { desc = "Run Rust" })
 
-      keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "go to declaration" })
-      keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "go to definition" })
-      keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "go to implementation" })
+      keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
+      keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
+      keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
       keymap.set("n", "<C-k>", vim.lsp.buf.signature_help)
-      keymap.set("n", "<leader>R", vim.lsp.buf.rename, { desc = "variable rename" })
-      keymap.set("n", "gr", vim.lsp.buf.references, { desc = "show references" })
-      keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "previous diagnostic" })
-      keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "next diagnostic" })
+      keymap.set("n", "<leader>R", vim.lsp.buf.rename, { desc = "Rename variable" })
+      keymap.set("n", "gr", vim.lsp.buf.references, { desc = "Show references" })
+      keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
+      keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
 
       api.nvim_create_autocmd("CursorHold", {
         buffer = bufnr,
@@ -244,4 +244,3 @@ local opts = {
 }
 
 rt.setup(opts)
-

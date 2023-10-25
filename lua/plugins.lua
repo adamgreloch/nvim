@@ -78,7 +78,7 @@ packer.startup {
 
     use {
       "nvim-lualine/lualine.nvim",
-      config = [[require('config.statusline')]],
+      config = [[require('config.statusline')]]
     }
 
     use { "rebelot/kanagawa.nvim" }
@@ -155,6 +155,24 @@ packer.startup {
       },
       config = [[require('config.neo-tree')]],
     }
+
+    use {
+      "j-hui/fidget.nvim",
+      tag = "legacy",
+      config = function()
+        require("fidget").setup()
+      end,
+    }
+
+    use {
+      "numToStr/Comment.nvim",
+      config = function()
+        require('Comment').setup()
+      end,
+    }
+
+    use { "neovimhaskell/haskell-vim" }
+    use { "godlygeek/tabular" }
   end,
   config = {
     max_jobs = 16,

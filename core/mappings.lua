@@ -17,11 +17,11 @@ keymap.set("n", "<C-h>", "<C-w>h")
 keymap.set("n", "<C-l>", "<C-w>l")
 
 -- Switch between two last buffers quickly
-keymap.set("n", "<leader>b", "<C-^>")
+keymap.set("n", "<leader>b", "<C-^>", { desc = "Switch between two last buffers" })
 
 -- Open journal entry
-keymap.set("n", "<leader>oj", "<cmd>JournalOpen<cr>")
+keymap.set("n", "<leader>oj", "<cmd>JournalOpen<cr>", { desc = "Open journal entry" })
 
 -- Move between buffers
-keymap.set("n", "<space>q", "<cmd>bn<cr>")
-keymap.set("n", "<space>p", "<cmd>bp<cr>")
+keymap.set("n", "<space>q", "<cmd>bn<cr>", { desc = "Previous buffer" })
+keymap.set("n", "<space>p", "<cmd>bp<cr>", { desc = "Next buffer" })

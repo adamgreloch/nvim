@@ -2,8 +2,7 @@ scriptencoding utf-8
 
 set foldmethod=marker
 
-" (?) change fillchars for folding, vertical split, end of buffer, and message separator
-set listchars=tab:▸\ ,eol:¬
+set nolist
 
 " Split window below/right when creating horizontal/vertical windows
 set splitbelow splitright
@@ -76,9 +75,6 @@ set confirm
 
 set visualbell noerrorbells  " Do not use visual and errorbells
 set history=500  " The number of command and search history to keep
-
-" Use list mode and customized listchars
-set list listchars=tab:▸\ ,extends:❯,precedes:❮,nbsp:␣
 
 " Auto-write the file based on some condition
 set autowrite
