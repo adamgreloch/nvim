@@ -221,9 +221,10 @@ end
 -- global config for diagnostic
 diagnostic.config {
   underline = true,
-  virtual_text = false,
+  virtual_text = true,
   signs = true,
   severity_sort = true,
+  update_in_insert = true,
 }
 
 -- Change border of documentation hover window, See https://github.com/neovim/neovim/pull/13998.

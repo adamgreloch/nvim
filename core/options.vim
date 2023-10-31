@@ -89,31 +89,8 @@ set titlestring=%t
 " Persistent undo even after you close a file and re-open it
 set undofile
 
-" Do not show "match xx of xx" and other messages during auto-completion
-set shortmess+=c
-
-" Do not show search match count on bottom right
-set shortmess+=S
-
-" Completion behaviour
-" set completeopt+=noinsert  " Auto select the first completion entry
-set completeopt+=menuone  " Show menu even if there is only one item
-set completeopt-=preview  " Disable the preview window
-
-set pumheight=10  " Maximum number of items to show in popup menu
-set pumblend=10  " pseudo transparency for completion menu
-
-set winblend=0  " pseudo transparency for floating window
-
-" Insert mode key word completion setting
-set complete+=kspell complete-=w complete-=b complete-=u complete-=t
-
 set spelllang=en     " Spell languages
 set spellsuggest+=12 " show 12 spell suggestions at most
-
-" Align indent to next multiple value of shiftwidth. For its meaning,
-" see http://vim.1045645.n5.nabble.com/shiftround-option-td5712100.html
-" set shiftround
 
 set virtualedit=block  " Virtual edit is useful for visual block edit
 
