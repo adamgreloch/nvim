@@ -113,7 +113,10 @@ packer.startup {
       config = [[require('config.trouble')]]
     }
 
-    use { "sbdchd/neoformat" }
+    use {
+      "mhartington/formatter.nvim",
+      config = [[require('config.formatter-nvim')]]
+    }
 
     use {
       'phaazon/hop.nvim',
@@ -143,11 +146,6 @@ packer.startup {
     }
 
     use {
-      "voldikss/vim-floaterm",
-      config = [[require('config.floaterm')]]
-    }
-
-    use {
       "nvim-neo-tree/neo-tree.nvim",
       requires = {
         "nvim-lua/plenary.nvim",
@@ -158,7 +156,7 @@ packer.startup {
 
     use {
       "j-hui/fidget.nvim",
-      tag = "legacy",
+      branch = "legacy",
       config = function()
         require("fidget").setup()
       end,
@@ -173,6 +171,7 @@ packer.startup {
 
     use { "neovimhaskell/haskell-vim" }
     use { "godlygeek/tabular" }
+    use { "airblade/vim-rooter" }
   end,
   config = {
     max_jobs = 16,

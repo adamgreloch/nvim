@@ -62,11 +62,11 @@ cmp.setup {
   },
 }
 
-cmp.setup.filetype("tex", {
+--[[ cmp.setup.filetype("tex", {
   sources = {
     { name = "omni" },
     { name = "ultisnips" }, -- For ultisnips user.
     { name = "buffer", keyword_length = 2 }, -- for buffer word completion
     { name = "path" }, -- for path completion
   },
-})
+}) ]]

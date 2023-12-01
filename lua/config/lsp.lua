@@ -103,10 +103,13 @@ if utils.executable("pylsp") then
     settings = {
       pylsp = {
         plugins = {
-          pylint = { enabled = true, executable = "pylint" },
+          pylint = {
+            enabled = true,
+            executable = "pylint",
+            args = "--extension-pkg-whitelist=lxml"
+          },
           pyflakes = { enabled = false },
           pycodestyle = { enabled = false },
-          jedi_completion = { fuzzy = true },
           pyls_isort = { enabled = true },
           pylsp_mypy = { enabled = true },
         },
@@ -116,13 +119,6 @@ if utils.executable("pylsp") then
       debounce_text_changes = 200,
     },
     capabilities = capabilities,
-  }
-end
-
-if utils.executable('pyright') then
-  lspconfig.pyright.setup {
-    on_attach = custom_attach,
-    capabilities = capabilities
   }
 end
 
@@ -146,7 +142,7 @@ if utils.executable("solidity-ls") then
   }
 end
 
-if utils.executable("ltex-ls") then
+--[[ if utils.executable("ltex-ls") then
   lspconfig.ltex.setup {
     on_attach = custom_attach,
     cmd = { "ltex-ls" },
@@ -158,7 +154,7 @@ if utils.executable("ltex-ls") then
     },
     flags = { debounce_text_changes = 300 },
   }
-end
+end ]]
 
 if utils.executable("clangd") then
   lspconfig.clangd.setup {

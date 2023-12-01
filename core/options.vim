@@ -11,7 +11,7 @@ set splitbelow splitright
 " see https://unix.stackexchange.com/q/36882/221410 for more info
 set timeoutlen=500
 
-set updatetime=500  " For CursorHold events
+set updatetime=0  " For CursorHold events
 
 " Clipboard settings, always use clipboard for all delete, yank, change, put
 " operation, see https://stackoverflow.com/q/30691466/6064933
@@ -127,3 +127,4 @@ sign define DiagnosticSignError text= texthl=DiagnosticSignError linehl= numhl=D
 sign define DiagnosticSignWarn text= texthl=DiagnosticSignWarn linehl= numhl=DiagnosticSignWarn
 sign define DiagnosticSignInfo text= texthl=DiagnosticSignInfo linehl= numhl=DiagnosticSignInfo
 sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl= numhl=DiagnosticSignHint
+

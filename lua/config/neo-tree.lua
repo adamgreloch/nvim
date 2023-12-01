@@ -6,6 +6,10 @@ require("neo-tree").setup({
       visible = true,
       hide_dotfiles = true,
       hide_gitignored = true
+    },
+    follow_current_file = {
+      enabled = true,
+      leave_dirs_open = false,
     }
   },
   default_component_configs = {

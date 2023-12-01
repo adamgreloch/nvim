@@ -59,6 +59,8 @@ let g:GPGDefaultRecipients = ['zplhatesbananas@gmail.com']
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
+let g:UltiSnipsSnippetDirectories = ['~/.config/nvim/ultisnips']
+
 " vimtex
 let g:vimtex_motion_matchparen = 0
 let g:vimtex_matchparen_enabled = 0
@@ -90,3 +92,7 @@ let g:vimtex_compiler_latexmk = {
 
 let g:tex_conceal='abdmg'
 let g:vimtex_quickfix_open_on_warning = 0
+
+" vim-rooter
+let g:rooter_silent_chdir = 1
+let g:rooter_patterns = ['>rift-dev-zpp22']
