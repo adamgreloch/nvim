@@ -12,16 +12,13 @@ call utils#Cabbrev('pud', 'PackerUpdate')
 call utils#Cabbrev('pc', 'PackerClean')
 call utils#Cabbrev('ps', 'PackerSync')
 
-" Wilder
-let hl = wilder#make_hl('WilderAccent', 'Pmenu', [{}, {}, {'foreground': '#f4468f'}])
-
 call wilder#setup({
       \ 'modes': [':', '/', '?'],
       \ 'next_key': '<Tab>',
       \ 'previous_key': '<S-Tab>',
       \ 'accept_key': '<C-l>',
       \ 'reject_key': '<C-h>',
-      \ 'enable_cmdline_enter': 0,
+      \ 'enable_cmdline_enter': 1,
       \ })
 
 call wilder#set_option('pipeline', [
@@ -41,16 +38,14 @@ let s:highlighters = [
         \ wilder#basic_highlighter(),
         \ ]
 
-call wilder#set_option('renderer', wilder#popupmenu_renderer(wilder#popupmenu_border_theme({
+call wilder#set_option('renderer', wilder#popupmenu_renderer({
       \ 'highlighter': s:highlighters,
       \ 'max_height': '40%',
       \ 'reverse': 0,
       \ 'highlights': {
-      \   'border': 'Normal',
-      \   'accent': hl,
+      \   'accent': wilder#make_hl('WilderAccent', 'Pmenu', [{}, {}, {'foreground': '#f4468f'}]),
       \ },
-      \ 'border': 'rounded',
-      \ })))
+      \ }))
 
 " vim-gnupg
 let g:GPGDefaultRecipients = ['zplhatesbananas@gmail.com']

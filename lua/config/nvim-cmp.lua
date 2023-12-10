@@ -32,7 +32,7 @@ cmp.setup {
   sources = {
     { name = "nvim_lsp" }, -- For nvim-lsp
     --{ name = "ultisnips" }, -- For ultisnips user.
-    { name = "path" }, -- for path completion
+    { name = "path" },     -- for path completion
     --{ name = "buffer", keyword_length = 2 }, -- for buffer word completion
   },
   completion = {
@@ -56,9 +56,9 @@ cmp.setup {
     },
   },
   window = {
-      documentation = cmp.config.window.bordered({
-          winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None",
-      }),
+    documentation = cmp.config.window.bordered({
+      winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None",
+    }),
   },
 }
 

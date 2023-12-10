@@ -124,7 +124,7 @@ packer.startup {
       config = [[require('config.hop')]]
     }
 
-    use { "gelguy/wilder.nvim", opt = true, setup = [[vim.cmd('packadd wilder.nvim')]] }
+    use { "gelguy/wilder.nvim", setup = [[vim.cmd('packadd wilder.nvim')]] }
 
     use { "jamessan/vim-gnupg" }
 

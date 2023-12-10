@@ -1,5 +1,7 @@
 scriptencoding utf-8
 
+set cmdheight=0
+
 set foldmethod=marker
 
 set nolist
