@@ -1,6 +1,6 @@
 scriptencoding utf-8
 
-set cmdheight=0
+set cmdheight=1 " currently clashes with shortmess
 
 set foldmethod=marker
 

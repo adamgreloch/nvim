@@ -172,6 +172,17 @@ packer.startup {
     use { "neovimhaskell/haskell-vim" }
     use { "godlygeek/tabular" }
     use { "airblade/vim-rooter" }
+    use { "airblade/vim-gitgutter" }
+    use {
+      'rmagatti/goto-preview',
+      config = function()
+        require('goto-preview').setup {
+          default_mappings = true,
+        }
+      end
+    }
+    use { "andymass/vim-matchup" }
+    use { "olimorris/onedarkpro.nvim" }
   end,
   config = {
     max_jobs = 16,

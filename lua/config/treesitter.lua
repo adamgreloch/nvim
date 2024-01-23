@@ -18,6 +18,6 @@ require("nvim-treesitter.configs").setup {
   },
   highlight = {
     enable = true,        -- false will disable the whole extension
-    disable = { 'help' }, -- list of language that will be disabled
+    disable = { 'help', 'vimdoc' }, -- list of language that will be disabled
   },
 }

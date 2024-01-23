@@ -64,7 +64,10 @@ local custom_attach = function(client, bufnr)
   })
 
   -- The blow command will highlight the current variable and its usages in the buffer.
-  if client.server_capabilities.documentHighlightProvider then
+  --
+  -- Unless you're a deranged server like ocamllsp that abuses this highlighting,
+  -- in which case it won't do anything.
+  if client.server_capabilities.documentHighlightProvider and client.name ~= "ocamllsp" then
     vim.cmd([[
       hi! link LspReferenceRead Visual
       hi! link LspReferenceText Visual
@@ -97,30 +100,30 @@ end
 
 lspconfig.util.default_config.on_attach = custom_attach;
 
-if utils.executable("pylsp") then
-  lspconfig.pylsp.setup {
-    on_attach = custom_attach,
-    settings = {
-      pylsp = {
-        plugins = {
-          pylint = {
-            enabled = true,
-            executable = "pylint",
-            args = "--extension-pkg-whitelist=lxml"
-          },
-          pyflakes = { enabled = false },
-          pycodestyle = { enabled = false },
-          pyls_isort = { enabled = true },
-          pylsp_mypy = { enabled = true },
-        },
-      },
-    },
-    flags = {
-      debounce_text_changes = 200,
-    },
-    capabilities = capabilities,
-  }
-end
+-- if utils.executable("pylsp") then
+--   lspconfig.pylsp.setup {
+--     on_attach = custom_attach,
+--     settings = {
+--       pylsp = {
+--         plugins = {
+--           pylint = {
+--             enabled = true,
+--             executable = "pylint",
+--             args = "--extension-pkg-whitelist=lxml"
+--           },
+--           pyflakes = { enabled = false },
+--           pycodestyle = { enabled = false },
+--           pyls_isort = { enabled = true },
+--           pylsp_mypy = { enabled = true },
+--         },
+--       },
+--     },
+--     flags = {
+--       debounce_text_changes = 200,
+--     },
+--     capabilities = capabilities,
+--   }
+-- end
 
 if utils.executable("jdtls") then
   lspconfig.jdtls.setup {
@@ -129,11 +132,11 @@ if utils.executable("jdtls") then
   }
 end
 
--- lspconfig.ocamllsp.setup{
---   on_attach = custom_attach,
---   capabilities = capabilities,
---   root_dir = lsputil.root_pattern("Makefile", "*.opam", "esy.json", "package.json", ".git", "dune-project", "dune-workspace"),
--- }
+lspconfig.ocamllsp.setup {
+  on_attach = custom_attach,
+  capabilities = capabilities,
+  root_dir = lsputil.root_pattern("Makefile", "*.opam", "esy.json", "package.json", ".git", "dune-project", "dune-workspace"),
+}
 
 if utils.executable("solidity-ls") then
   lspconfig.solidity.setup {
@@ -159,7 +162,13 @@ end ]]
 if utils.executable("clangd") then
   lspconfig.clangd.setup {
     on_attach = custom_attach,
-    capabilities = capabilities,
+    capabilities = {
+      textDocument = {
+        semanticHighlightingCapabilities = {
+          semanticHighlighting = true
+        }
+      }
+    },
     filetypes = { "c", "cpp", "cc" },
   }
 end
@@ -224,5 +233,5 @@ diagnostic.config {
 }
 
 -- Change border of documentation hover window, See https://github.com/neovim/neovim/pull/13998.
-lsp.handlers['textDocument/hover'] = lsp.with(lsp.handlers.hover, { border = 'rounded' })
-lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.signature_help, { border = 'rounded' })
+lsp.handlers['textDocument/hover'] = lsp.with(lsp.handlers.hover, { border = "single" })
+lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.signature_help, { border = "single" })
