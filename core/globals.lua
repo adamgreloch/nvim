@@ -41,3 +41,6 @@ vim.g.signcolumn="number"
 
 -- Set textwidth
 vim.opt.textwidth = 80
+
+-- Disable recommended markdown style
+vim.g.markdown_recommended_style = 0

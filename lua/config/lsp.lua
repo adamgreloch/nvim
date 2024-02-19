@@ -173,6 +173,13 @@ if utils.executable("clangd") then
   }
 end
 
+if utils.executable("pyright") then
+  lspconfig.pyright.setup {
+    on_attach = custom_attach,
+    capabilities = capabilities,
+  }
+end
+
 -- set up vim-language-server
 if utils.executable("vim-language-server") then
   lspconfig.vimls.setup {

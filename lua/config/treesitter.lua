@@ -8,7 +8,6 @@ require("nvim-treesitter.configs").setup {
     "json",
     "rust",
     "comment",
-    "markdown",
     "ocaml",
   },
   ignore_install = {}, -- List of parsers to ignore installing
@@ -18,6 +17,6 @@ require("nvim-treesitter.configs").setup {
   },
   highlight = {
     enable = true,        -- false will disable the whole extension
-    disable = { 'help', 'vimdoc' }, -- list of language that will be disabled
+    disable = { 'help', 'vimdoc', 'markdown' }, -- list of language that will be disabled
   },
 }
