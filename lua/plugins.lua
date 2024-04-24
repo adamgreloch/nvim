@@ -57,6 +57,7 @@ packer.startup {
     use { "hrsh7th/cmp-path", after = "nvim-cmp" }
     use { "hrsh7th/cmp-buffer", after = "nvim-cmp" }
     use { "hrsh7th/cmp-omni", after = "nvim-cmp" }
+    use { "hrsh7th/cmp-calc", after = "nvim-cmp" }
     use { "quangnguyen30192/cmp-nvim-ultisnips", after = { "nvim-cmp", "ultisnips" } }
 
     -- nvim-lsp configuration (it relies on cmp-nvim-lsp, so it should be loaded after cmp-nvim-lsp).
@@ -171,7 +172,7 @@ packer.startup {
 
     use { "neovimhaskell/haskell-vim" }
     use { "godlygeek/tabular" }
-    use { "airblade/vim-rooter" }
+    -- use { "airblade/vim-rooter" }
     use { "airblade/vim-gitgutter" }
     use {
       'rmagatti/goto-preview',

@@ -3,20 +3,30 @@ require('kanagawa').setup({
   undercurl = true, -- enable undercurls
   commentStyle = { italic = false },
   functionStyle = {},
-  keywordStyle = { italic = false },
+  keywordStyle = { italic = false, bold = true },
   statementStyle = { bold = true },
   typeStyle = {},
   transparent = false,   -- do not set background color
   dimInactive = false,   -- dim inactive window `:h hl-NormalNC`
   terminalColors = true, -- define vim.g.terminal_color_{0,17}
   colors = {             -- add/modify theme and palette colors
-    palette = {},
+    palette = {
+      -- dragonBlack1 = "#000000",
+      -- dragonBlack2 = "#000000",
+      -- dragonBlack3 = "#000000",
+      -- dragonBlack4 = "#111111",
+      -- dragonBlack5 = "#222222",
+      -- dragonBlack6 = "#444444",
+    },
     theme = {
       wave = {},
       lotus = {},
-      dragon = {},
+      dragon = {
+      },
       all = {
-        ui = { bg_gutter = "none" }
+        ui = {
+          bg_gutter = "none",
+        }
       }
     },
   },
@@ -26,6 +36,7 @@ require('kanagawa').setup({
       NormalFloat = { bg = "none" },
       FloatBorder = { bg = "none" },
       FloatTitle = { bg = "none" },
+      WinSeparator = { fg = theme.ui.bg_p2 },
 
       -- Save an hlgroup with dark background and dimmed foreground
       -- so that you can use it where your still want darker windows.
@@ -58,14 +69,16 @@ require('kanagawa').setup({
       PmenuThumb = { bg = theme.ui.bg_p2 },
     }
   end,
-  theme = "dragon",  -- Load "wave" theme when 'background' option is not set
-  background = {     -- map the value of 'background' option to a theme
-    dark = "dragon", -- try "dragon" !
+  theme = "wave",
+  background = {
+    dark = "wave",
     light = "lotus"
   },
 })
 
 -- setup must be called before loading
-vim.cmd("colorscheme kanagawa-dragon")
+-- vim.cmd("colorscheme kanagawa-dragon")
+vim.cmd("colorscheme kanagawa")
+
 
 vim.api.nvim_set_hl(0, "@lsp.type.comment.cpp", { link = "Comment" })

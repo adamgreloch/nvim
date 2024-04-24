@@ -1,6 +1,3 @@
--- My first Nvim config. This configuration takes substantial amount of code from
--- https://github.com/jdhao/nvim-config/, so most of the credit goes to jdhao.
-
 vim.loader.enable()
 
 local api = vim.api

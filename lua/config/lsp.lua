@@ -132,6 +132,11 @@ if utils.executable("jdtls") then
   }
 end
 
+lspconfig.hls.setup {
+  on_attach = custom_attach,
+  capabilities = capabilities,
+}
+
 lspconfig.ocamllsp.setup {
   on_attach = custom_attach,
   capabilities = capabilities,
