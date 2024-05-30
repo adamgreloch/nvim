@@ -12,6 +12,9 @@ call utils#Cabbrev('pud', 'PackerUpdate')
 call utils#Cabbrev('pc', 'PackerClean')
 call utils#Cabbrev('ps', 'PackerSync')
 
+" Git shorts
+call utils#Cabbrev('gb', 'Git blame')
+
 call wilder#setup({
       \ 'modes': [':', '/', '?'],
       \ 'next_key': '<Tab>',
@@ -95,4 +98,6 @@ let g:rooter_patterns = ['>rift-dev-zpp22']
 " vim-gitgutter
 let g:gitgutter_signs = 0
 let g:gitgutter_highlight_linenrs = 1
-set signcolumn=no
+" set signcolumn=no
+
+let g:ditto_hlgroups = ['WarningMsg']

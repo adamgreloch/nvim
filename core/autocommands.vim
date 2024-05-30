@@ -46,3 +46,9 @@ augroup coq
   autocmd Filetype coq nnoremap<buffer><silent><space>l :CoqToLine<cr>
 augroup END
 
+autocmd BufNewFile,BufRead *.pl set filetype=prolog
+
+augroup highlight_yank
+    autocmd!
+    au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=200 }
+augroup END

@@ -36,8 +36,7 @@ vim.g.loaded_sql_completion = 1
 -- Disable cursor theming
 vim.opt.guicursor = "n-v-c-i:block"
 
--- Display linter signs in number column
-vim.g.signcolumn="number"
+vim.g.signcolumn="yes"
 
 -- Set textwidth
 vim.opt.textwidth = 80

@@ -78,6 +78,13 @@ packer.startup {
     }
 
     use {
+      "nvim-telescope/telescope-frecency.nvim",
+      config = function()
+        require("telescope").load_extension "frecency"
+      end,
+    }
+
+    use {
       "nvim-lualine/lualine.nvim",
       config = [[require('config.statusline')]]
     }
@@ -163,17 +170,16 @@ packer.startup {
       end,
     }
 
-    use {
-      "numToStr/Comment.nvim",
-      config = function()
-        require('Comment').setup()
-      end,
-    }
-
     use { "neovimhaskell/haskell-vim" }
     use { "godlygeek/tabular" }
     -- use { "airblade/vim-rooter" }
-    use { "airblade/vim-gitgutter" }
+    -- use { "airblade/vim-gitgutter" }
+    use {
+      "lewis6991/gitsigns.nvim",
+      config = function()
+        require('gitsigns').setup()
+      end
+    }
     use {
       'rmagatti/goto-preview',
       config = function()
@@ -183,7 +189,7 @@ packer.startup {
       end
     }
     use { "andymass/vim-matchup" }
-    use { "olimorris/onedarkpro.nvim" }
+    use { "dbmrq/vim-ditto" }
   end,
   config = {
     max_jobs = 16,

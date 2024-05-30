@@ -16,6 +16,8 @@ keymap.set("n", "<C-j>", "<C-w>j")
 keymap.set("n", "<C-h>", "<C-w>h")
 keymap.set("n", "<C-l>", "<C-w>l")
 
+keymap.set("n", "<Leader>r", ":%s/\\<<C-r><C-w>\\>/")
+
 -- Switch between two last buffers quickly
 keymap.set("n", "<leader>b", "<C-^>", { desc = "Switch between two last buffers" })
 
