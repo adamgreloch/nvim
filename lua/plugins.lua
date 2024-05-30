@@ -15,7 +15,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup {
   {
     "williamboman/mason.nvim",
-    run = ":MasonUpdate", -- :MasonUpdate updates registry contents
+    build = ":MasonUpdate", -- :MasonUpdate updates registry contents
     config = function()
       require('config.mason')
     end,
@@ -47,7 +47,7 @@ require("lazy").setup {
   {
     "nvim-treesitter/nvim-treesitter",
     event = "BufEnter",
-    run = ":TSUpdate",
+    build = ":TSUpdate",
     config = function()
       require('config.treesitter')
     end,
@@ -134,7 +134,7 @@ require("lazy").setup {
     config = function() require('config.hop') end,
   },
 
-  { "gelguy/wilder.nvim" },
+  -- { "gelguy/wilder.nvim" },
 
   { "jamessan/vim-gnupg" },
 
