@@ -13,6 +13,8 @@ keymap.set("n", "<space>f", vim.lsp.buf.format, { desc = "format code" })
 
 vim.lsp.set_log_level("off") -- disable logging for improved performance
 
+keymap.set("n", "<space>a", vim.lsp.buf.code_action, { desc = "LSP code action" })
+
 local custom_attach = function(client, bufnr)
   -- Mappings.
   local map = function(mode, l, r, opts)
@@ -33,7 +35,6 @@ local custom_attach = function(client, bufnr)
   map("n", "[d", diagnostic.goto_prev, { desc = "previous diagnostic" })
   map("n", "]d", diagnostic.goto_next, { desc = "next diagnostic" })
   map("n", "<leader>q", diagnostic.setqflist, { desc = "put diagnostic to qf" })
-  map("n", "<space>a", vim.lsp.buf.code_action, { desc = "LSP code action" })
   -- map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, { desc = "add workspace folder" })
   -- map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, { desc = "remove workspace folder" })
 
@@ -100,30 +101,13 @@ end
 
 lspconfig.util.default_config.on_attach = custom_attach;
 
--- if utils.executable("pylsp") then
---   lspconfig.pylsp.setup {
---     on_attach = custom_attach,
---     settings = {
---       pylsp = {
---         plugins = {
---           pylint = {
---             enabled = true,
---             executable = "pylint",
---             args = "--extension-pkg-whitelist=lxml"
---           },
---           pyflakes = { enabled = false },
---           pycodestyle = { enabled = false },
---           pyls_isort = { enabled = true },
---           pylsp_mypy = { enabled = true },
---         },
---       },
---     },
---     flags = {
---       debounce_text_changes = 200,
---     },
---     capabilities = capabilities,
---   }
--- end
+lspconfig.pylsp.setup {
+  on_attach = custom_attach,
+  flags = {
+    debounce_text_changes = 200,
+  },
+  capabilities = capabilities,
+}
 
 if utils.executable("jdtls") then
   lspconfig.jdtls.setup {
@@ -150,20 +134,6 @@ if utils.executable("solidity-ls") then
   }
 end
 
---[[ if utils.executable("ltex-ls") then
-  lspconfig.ltex.setup {
-    on_attach = custom_attach,
-    cmd = { "ltex-ls" },
-    filetypes = { "text", "plaintex", "tex", "markdown" },
-    settings = {
-      ltex = {
-        language = "en"
-      },
-    },
-    flags = { debounce_text_changes = 300 },
-  }
-end ]]
-
 if utils.executable("clangd") then
   lspconfig.clangd.setup {
     on_attach = custom_attach,
@@ -177,6 +147,33 @@ if utils.executable("clangd") then
     filetypes = { "c", "cpp", "cc" },
   }
 end
+
+-- lspconfig.ltex.setup {
+--   on_attach = function(client, bufnr)
+--     custom_attach(client, bufnr)
+--     -- require("ltex-utils").on_attach(bufnr)
+--   end,
+--   settings = {
+--     ltex = {
+--       language = "pl",
+--       latex = {
+--         commands = {
+--           ["\\label{}"] = "dummy",
+--           ["\\documentclass[]{}"] = "dummy",
+--           ["\\cite{}"] = "dummy",
+--           ["\\ref{}"] = "dummy",
+--           ["\\cite[]{}"] = "dummy",
+--           ["\\code{}"] = "dummy"
+--         },
+--         environments = {
+--           ["figure"] = "ignore",
+--         }
+--       },
+--     },
+--   },
+--   filetypes = {},
+--   -- flags = { debounce_text_changes = 300 },
+-- }
 
 if utils.executable("pyright") then
   lspconfig.pyright.setup {

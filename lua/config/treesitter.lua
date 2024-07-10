@@ -4,7 +4,6 @@ require("nvim-treesitter.configs").setup {
     "c",
     "cpp",
     "lua",
-    "vim",
     "json",
     "rust",
     "comment",
@@ -13,10 +12,10 @@ require("nvim-treesitter.configs").setup {
   ignore_install = {}, -- List of parsers to ignore installing
   indent = {
     enable = true,
-    disable = { "rust" },
+    disable = { "rust", 'vim', 'vimdoc' },
   },
   highlight = {
     enable = true,        -- false will disable the whole extension
-    disable = { 'help', 'vimdoc', 'markdown' }, -- list of language that will be disabled
+    disable = { 'help', 'vim', 'vimdoc', 'markdown' }, -- list of language that will be disabled
   },
 }

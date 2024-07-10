@@ -44,14 +44,14 @@ require("lazy").setup {
     end,
   },
 
-  {
-    "nvim-treesitter/nvim-treesitter",
-    event = "BufEnter",
-    build = ":TSUpdate",
-    config = function()
-      require('config.treesitter')
-    end,
-  },
+  -- {
+  --   "nvim-treesitter/nvim-treesitter",
+  --   event = "BufEnter",
+  --   build = ":TSUpdate",
+  --   config = function()
+  --     require('config.treesitter')
+  --   end,
+  -- },
 
   { "simnalamburt/vim-mundo",
     cmd = { "MundoToggle", "MundoShow" }
@@ -90,6 +90,7 @@ require("lazy").setup {
   {
     "tpope/vim-fugitive",
     event = "User InGitRepo",
+    cmd = "Git",
     keys = { { "<leader>G", "<cmd>Git<cr>", desc = "Git status" } },
     config = function()
       require('config.fugitive')
@@ -117,9 +118,9 @@ require("lazy").setup {
 
   {
     "folke/trouble.nvim",
-    config = function()
-      require('config.trouble')
-    end,
+    cmd = "Trouble",
+    keys = { { "<space>e", "<cmd> Trouble diagnostics toggle<cr>", desc = "Diagnostics (Trouble)" } },
+    opts = {},
   },
 
   {
@@ -135,6 +136,10 @@ require("lazy").setup {
   },
 
   -- { "gelguy/wilder.nvim" },
+
+  { "numToStr/Comment.nvim",
+    opts = {}
+  },
 
   { "jamessan/vim-gnupg" },
 
@@ -160,10 +165,12 @@ require("lazy").setup {
 
   {
     "j-hui/fidget.nvim",
-    branch = "legacy",
-    config = function()
-      require("fidget").setup()
-    end,
+    tag = "v1.4.5",
+    opts = {
+      progress = {
+        ignore = { "pylsp", "ltex-ls" },
+      },
+    },
   },
 
   { "neovimhaskell/haskell-vim", ft = "haskell" },
@@ -197,6 +204,15 @@ require("lazy").setup {
       vim.g.startuptime_tries = 10
     end,
   },
+
+  -- {
+  --   "jhofscheier/ltex-utils.nvim",
+  --   dependencies = {
+  --     "neovim/nvim-lspconfig",
+  --     "nvim-telescope/telescope.nvim",
+  --   },
+  --   opts = {},
+  -- },
 
   -- rarely used stuff:
   -- "whonore/Coqtail",
