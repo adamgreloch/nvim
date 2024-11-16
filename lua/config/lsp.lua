@@ -9,34 +9,27 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local lspconfig = require("lspconfig")
 local lsputil = require "lspconfig/util"
 
-keymap.set("n", "<space>f", vim.lsp.buf.format, { desc = "format code" })
-
 vim.lsp.set_log_level("off") -- disable logging for improved performance
 
-keymap.set("n", "<space>a", vim.lsp.buf.code_action, { desc = "LSP code action" })
+keymap.set("n", "<leader>f", vim.lsp.buf.format, { desc = "format code" })
+keymap.set("n", "<leader>a", vim.lsp.buf.code_action, { desc = "LSP code action" })
+
+keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "go to declaration" })
+keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "go to definition" })
+keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "go to implementation" })
+keymap.set("n", "<C-]>", vim.lsp.buf.definition)
+keymap.set("n", "K", vim.lsp.buf.hover)
+-- map("n", "<C-k>", vim.lsp.buf.signature_help)
+keymap.set("n", "<leader>R", vim.lsp.buf.rename, { desc = "variable rename" })
+keymap.set("n", "gr", vim.lsp.buf.references, { desc = "show references" })
+keymap.set("n", "[d", diagnostic.goto_prev, { desc = "previous diagnostic" })
+keymap.set("n", "]d", diagnostic.goto_next, { desc = "next diagnostic" })
+keymap.set("n", "<leader>e", diagnostic.setqflist, { desc = "put diagnostic to qf" })
+-- map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, { desc = "add workspace folder" })
+-- map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, { desc = "remove workspace folder" })
+
 
 local custom_attach = function(client, bufnr)
-  -- Mappings.
-  local map = function(mode, l, r, opts)
-    opts = opts or {}
-    opts.silent = true
-    opts.buffer = bufnr
-    keymap.set(mode, l, r, opts)
-  end
-
-  map("n", "gD", vim.lsp.buf.declaration, { desc = "go to declaration" })
-  map("n", "gd", vim.lsp.buf.definition, { desc = "go to definition" })
-  map("n", "gi", vim.lsp.buf.implementation, { desc = "go to implementation" })
-  map("n", "<C-]>", vim.lsp.buf.definition)
-  map("n", "K", vim.lsp.buf.hover)
-  map("n", "<leader>R", vim.lsp.buf.rename, { desc = "variable rename" })
-  map("n", "gr", vim.lsp.buf.references, { desc = "show references" })
-  map("n", "[d", diagnostic.goto_prev, { desc = "previous diagnostic" })
-  map("n", "]d", diagnostic.goto_next, { desc = "next diagnostic" })
-  map("n", "<leader>q", diagnostic.setqflist, { desc = "put diagnostic to qf" })
-  -- map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, { desc = "add workspace folder" })
-  -- map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, { desc = "remove workspace folder" })
-
   api.nvim_create_autocmd("CursorHold", {
     buffer = bufnr,
     callback = function()
@@ -111,7 +104,6 @@ vim.lsp.config('ocamllsp', {
 })
 
 vim.lsp.config('clangd', {
-  on_attach = custom_attach,
   capabilities = {
     textDocument = {
       semanticHighlightingCapabilities = {
@@ -166,7 +158,6 @@ vim.lsp.enable('bashls')
 
 -- settings for lua-language-server can be found on https://github.com/LuaLS/lua-language-server/wiki/Settings .
 vim.lsp.config('lua_ls', {
-  on_attach = custom_attach,
   settings = {
     Lua = {
       runtime = {
@@ -190,7 +181,6 @@ vim.lsp.config('lua_ls', {
       },
     },
   },
-  capabilities = capabilities,
 })
 vim.lsp.enable('lua_ls')
 
