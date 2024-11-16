@@ -44,17 +44,34 @@ require("lazy").setup {
     end,
   },
 
-  -- {
-  --   "nvim-treesitter/nvim-treesitter",
-  --   event = "BufEnter",
-  --   build = ":TSUpdate",
-  --   config = function()
-  --     require('config.treesitter')
-  --   end,
-  -- },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    event = "BufEnter",
+    build = ":TSUpdate",
+    config = function()
+      require('config.treesitter')
+    end,
+  },
 
   { "simnalamburt/vim-mundo",
     cmd = { "MundoToggle", "MundoShow" }
+  },
+
+  {
+    "miikanissi/modus-themes.nvim",
+    priority = 1000,
+    config = function()
+      require('config.modus')
+    end,
+  },
+
+  {
+    "ray-x/lsp_signature.nvim",
+    event = "VeryLazy",
+    opts = {},
+    config = function(_, opts)
+      require 'lsp_signature'.setup(opts)
+    end
   },
 
   {
@@ -64,13 +81,14 @@ require("lazy").setup {
     keys = function()
       local builtin = require('telescope.builtin')
       return {
-        { '<leader>ff', builtin.git_files,                                desc = "Browse project files" },
-        { '<leader>fa', function() builtin.find_files({ cwd = "~" }) end, desc = "Browse homedir" },
-        { '<leader>fg', function() builtin.live_grep() end,               desc = "Live grep in cwd" },
-        { '<leader>fG', builtin.git_commits,                              desc = "Git commits" },
-        { '<leader>B',  builtin.buffers,                                  desc = "Go to buffer" },
-        { '<leader>fh', builtin.help_tags,                                desc = "Filter help tags" },
-        { '<leader>F',  builtin.lsp_document_symbols,                     desc = "List LSP document symbols" },
+        { '<leader>ff',       builtin.git_files,                                desc = "Find git files" },
+        { '<leader><leader>', builtin.find_files,                               desc = "Find files" },
+        { '<leader>fa',       function() builtin.find_files({ cwd = "~" }) end, desc = "Browse homedir" },
+        { '<leader>fg',       function() builtin.live_grep() end,               desc = "Live grep in cwd" },
+        { '<leader>fG',       builtin.git_commits,                              desc = "Git commits" },
+        { '<leader>B',        builtin.buffers,                                  desc = "Go to buffer" },
+        { '<leader>fh',       builtin.help_tags,                                desc = "Filter help tags" },
+        { '<leader>F',        builtin.lsp_document_symbols,                     desc = "List LSP document symbols" },
       }
     end,
     config = function()
@@ -89,8 +107,9 @@ require("lazy").setup {
 
   {
     "tpope/vim-fugitive",
-    event = "User InGitRepo",
-    cmd = "Git",
+    -- event = "User InGitRepo",
+    -- cmd = "Git",
+    lazy = false,
     keys = { { "<leader>G", "<cmd>Git<cr>", desc = "Git status" } },
     config = function()
       require('config.fugitive')

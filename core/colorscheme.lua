@@ -78,7 +78,7 @@ require('kanagawa').setup({
 
 -- setup must be called before loading
 -- vim.cmd("colorscheme kanagawa-dragon")
-vim.cmd("colorscheme kanagawa")
+-- vim.cmd("colorscheme kanagawa")
 
 
 vim.api.nvim_set_hl(0, "@lsp.type.comment.cpp", { link = "Comment" })

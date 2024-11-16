@@ -1,10 +1,10 @@
 ------------------------------------------------------------------------
 --                         builtin variables                          --
 ------------------------------------------------------------------------
-vim.g.loaded_perl_provider = 0  -- Disable perl provider
-vim.g.loaded_ruby_provider = 0  -- Disable ruby provider
-vim.g.loaded_node_provider = 0  -- Disable node provider
-vim.g.did_install_default_menus = 1  -- do not load menu
+vim.g.loaded_perl_provider = 0      -- Disable perl provider
+vim.g.loaded_ruby_provider = 0      -- Disable ruby provider
+vim.g.loaded_node_provider = 0      -- Disable node provider
+vim.g.did_install_default_menus = 1 -- do not load menu
 
 -- Enable highlighting for lua HERE doc inside vim script
 vim.g.vimsyn_embed = 'l'
@@ -36,10 +36,26 @@ vim.g.loaded_sql_completion = 1
 -- Disable cursor theming
 vim.opt.guicursor = "n-v-c-i:block"
 
-vim.g.signcolumn="yes"
+vim.g.signcolumn = "yes"
 
 -- Set textwidth
 vim.opt.textwidth = 80
 
 -- Disable recommended markdown style
 vim.g.markdown_recommended_style = 0
+
+
+-- TODO move somewhere
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local bufnr = args.buf
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if vim.tbl_contains({ 'null-ls' }, client.name) then -- blacklist lsp
+      return
+    end
+    require("lsp_signature").on_attach({
+      hint_enable = false
+    }, bufnr)
+  end,
+})

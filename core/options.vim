@@ -48,7 +48,7 @@ set softtabstop=2   " number of spaces in tab when editing
 set shiftwidth=2    " number of spaces to use for autoindent
 set expandtab       " expand tab to spaces so that tabs are spaces
 
-set number relativenumber  " Show line number and relative line number
+set number  " Show line number and relative line number
 
 " Ignore case in general, but become case-sensitive when uppercase is present
 set ignorecase smartcase
@@ -60,7 +60,13 @@ set fileencoding=utf-8
 set linebreak
 
 " List all matches and complete till longest common string
-set wildmode=list:longest
+set wildmenu
+set wildmode=longest:full,full
+set wildignorecase
+cnoremap <Left> <Space><BS><Left>
+cnoremap <Right> <Space><BS><Right>
+
+set wildcharm=<C-Z>
 
 " Use mouse to select and resize windows, etc.
 set mouse=nic  " Enable mouse in several mode
