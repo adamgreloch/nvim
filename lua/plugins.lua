@@ -102,14 +102,17 @@ require("lazy").setup {
     event = "InsertEnter"
   },
 
-  {
-    "folke/which-key.nvim",
-    config = function()
-      vim.o.timeout = true
-      vim.o.timeoutlen = 300
-      require('config.which-key')
-    end
-  },
+  { "rhysd/vim-llvm" },
+
+  -- bugged
+  -- {
+  --   "folke/which-key.nvim",
+  --   config = function()
+  --     vim.o.timeout = true
+  --     vim.o.timeoutlen = 300
+  --     require('config.which-key')
+  --   end
+  -- },
 
   {
     "folke/zen-mode.nvim",
@@ -135,7 +138,7 @@ require("lazy").setup {
     config = function() require('config.hop') end,
   },
 
-  -- { "gelguy/wilder.nvim" },
+  { "gelguy/wilder.nvim" },
 
   { "numToStr/Comment.nvim",
     opts = {}
@@ -177,6 +180,8 @@ require("lazy").setup {
 
   {
     "lewis6991/gitsigns.nvim",
+    event = "User InGitRepo",
+    cmd = { "Gitsigns" },
     config = function()
       require('gitsigns').setup()
     end
