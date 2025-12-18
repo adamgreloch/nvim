@@ -1,14 +1,9 @@
-local rt = require("rust-tools")
+-- local rt = require("rust-tools")
 local api = vim.api
 local keymap = vim.keymap
 
 local opts = {
   tools = { -- rust-tools options
-
-    -- how to execute terminal commands
-    -- options right now: termopen / quickfix / toggleterm / vimux
-    executor = require("rust-tools.executors").termopen,
-
     -- callback to execute once rust-analyzer is done initializing the workspace
     -- The callback receives one parameter indicating the `health` of the server: "ok" | "warning" | "error"
     on_initialized = nil,
@@ -155,46 +150,44 @@ local opts = {
   server = {
     -- standalone file support
     -- setting it to false may improve startup time
-    standalone = true,
-    settings = {
-      ["rust-analyzer"] = {
-        assist = {
-          importMergeBehaviour = "full",
-          importPrefix = "plain",
-        },
-
-        callInfo = {
-          full = true,
-        },
-
-        cargo = {
-          loadOutDirsFromCheck = true,
-          sysroot = "discover",
-        },
-
-        checkOnSave = {
-          --allFeatures = true,
-        },
-
-        procMacro = {
-          enable = true,
-        },
-
-        diagnostics = {
-          enable = true,
-          disabled = { "unresolved-proc-macro" },
-          enableExperimental = true,
-          warningsAsHint = {},
-        },
-      },
-    },
+    standalone = false,
+    -- settings = {
+    --   ["rust-analyzer"] = {
+    -- settings = {
+    --   ["rust-analyzer"] = {
+    --     assist = {
+    --       importPrefix = "plain",
+    --     },
+    --
+    --     callInfo = {
+    --       full = true,
+    --     },
+    --
+    --     procMacro = {
+    --       enable = true,
+    --     },
+    --
+    --     lruCapacity = 1024,
+    --
+    --     cargo = {
+    --       loadOutDirsFromCheck = true,
+    --       allFeatures = true,
+    --       sysroot = "discover",
+    --       runBuildScripts = true,
+    --     },
+    --
+    --     diagnostics = {
+    --       experimental = true,
+    --     },
+    --   },
+    -- },
     on_attach = function(_, bufnr)
       -- Hover actions
-      keymap.set("n", "K", rt.hover_actions.hover_actions, { buffer = bufnr })
+      -- keymap.set("n", "K", rt.hover_actions.hover_actions, { buffer = bufnr })
       -- Code action groups
-      keymap.set("n", "<space>a", rt.code_action_group.code_action_group, { buffer = bufnr, desc = "Code actions" })
-      keymap.set("n", "<space>d", "<cmd>RustDebuggables<cr>", { desc = "Debug Rust" })
+      -- keymap.set("n", "<space>a", rt.code_action_group.code_action_group, { buffer = bufnr, desc = "Code actions" })
       keymap.set("n", "<space>r", "<cmd>RustRunnables<cr>", { desc = "Run Rust" })
+      keymap.set( "n", "<space>d", function() vim.cmd.RustLsp({'renderDiagnostic', 'current'}) end, { silent = true, buffer = bufnr })
 
       keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
       keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
@@ -204,32 +197,6 @@ local opts = {
       keymap.set("n", "gr", vim.lsp.buf.references, { desc = "Show references" })
       keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
       keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
-
-      api.nvim_create_autocmd("CursorHold", {
-        buffer = bufnr,
-        callback = function()
-          local float_opts = {
-            focusable = false,
-            close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-            border = "rounded",
-            source = "always", -- show source in diagnostic popup window
-            prefix = " ",
-          }
-
-          if not vim.b.diagnostics_pos then
-            vim.b.diagnostics_pos = { nil, nil }
-          end
-
-          local cursor_pos = api.nvim_win_get_cursor(0)
-          if (cursor_pos[1] ~= vim.b.diagnostics_pos[1] or cursor_pos[2] ~= vim.b.diagnostics_pos[2])
-              and #vim.diagnostic.get() > 0
-          then
-            vim.diagnostic.open_float(nil, float_opts)
-          end
-
-          vim.b.diagnostics_pos = cursor_pos
-        end,
-      })
     end,
   },
 
@@ -242,5 +209,6 @@ local opts = {
     },
   },
 }
-
-rt.setup(opts)
+--
+-- rt.setup(opts)
+vim.g.rustaceanvim = opts;

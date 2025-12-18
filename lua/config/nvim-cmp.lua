@@ -1,13 +1,11 @@
 -- Setup nvim-cmp.
 local cmp = require("cmp")
-local lspkind = require("lspkind")
 
 cmp.setup {
   snippet = {
     expand = function(args)
-      -- For `ultisnips` user.
-      vim.fn["UltiSnips#Anon"](args.body)
-    end,
+      vim.snippet.expand(args.body)
+    end
   },
   mapping = cmp.mapping.preset.insert {
     ["<Tab>"] = function(fallback)
@@ -37,24 +35,11 @@ cmp.setup {
     { name = "calc" },
   },
   completion = {
-    keyword_length = 1,
+    -- keyword_length = 1,
     completeopt = "menu,noselect",
   },
   view = {
     entries = "custom",
-  },
-  formatting = {
-    format = lspkind.cmp_format {
-      mode = "symbol_text",
-      menu = {
-        nvim_lsp = "[LSP]",
-        ultisnips = "[US]",
-        nvim_lua = "[Lua]",
-        path = "[Path]",
-        buffer = "[Buffer]",
-        omni = "[Omni]",
-      },
-    },
   },
   window = {
     documentation = cmp.config.window.bordered({
@@ -82,3 +67,20 @@ cmp.setup {
     { name = "path" }, -- for path completion
   },
 }) ]]
+
+cmp.setup.cmdline({ '/', '?' }, {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = 'buffer' }
+  },
+})
+
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  }),
+  matching = { disallow_symbol_nonprefix_matching = false }
+})

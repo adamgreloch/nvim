@@ -3,8 +3,8 @@ require("neo-tree").setup({
   popup_border_style = "rounded",
   filesystem = {
     filtered_items = {
-      visible = true,
-      hide_dotfiles = true,
+      visible = false,
+      hide_dotfiles = false,
       hide_gitignored = true
     },
     follow_current_file = {

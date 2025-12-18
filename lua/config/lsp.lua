@@ -29,7 +29,6 @@ local custom_attach = function(client, bufnr)
   map("n", "gi", vim.lsp.buf.implementation, { desc = "go to implementation" })
   map("n", "<C-]>", vim.lsp.buf.definition)
   map("n", "K", vim.lsp.buf.hover)
-  map("n", "<C-k>", vim.lsp.buf.signature_help)
   map("n", "<leader>R", vim.lsp.buf.rename, { desc = "variable rename" })
   map("n", "gr", vim.lsp.buf.references, { desc = "show references" })
   map("n", "[d", diagnostic.goto_prev, { desc = "previous diagnostic" })
@@ -101,52 +100,28 @@ end
 
 lspconfig.util.default_config.on_attach = custom_attach;
 
-lspconfig.pylsp.setup {
-  on_attach = custom_attach,
-  flags = {
-    debounce_text_changes = 200,
-  },
-  capabilities = capabilities,
-}
-
-if utils.executable("jdtls") then
-  lspconfig.jdtls.setup {
-    on_attach = custom_attach,
-    capabilities = capabilities,
-  }
-end
-
-lspconfig.hls.setup {
+vim.lsp.config('*', {
   on_attach = custom_attach,
   capabilities = capabilities,
-}
+})
 
-lspconfig.ocamllsp.setup {
+vim.lsp.config('ocamllsp', {
+  root_dir = lsputil.root_pattern("Makefile", "*.opam", "esy.json", "package.json", ".git", "dune-project",
+    "dune-workspace"),
+})
+
+vim.lsp.config('clangd', {
   on_attach = custom_attach,
-  capabilities = capabilities,
-  root_dir = lsputil.root_pattern("Makefile", "*.opam", "esy.json", "package.json", ".git", "dune-project", "dune-workspace"),
-}
-
-if utils.executable("solidity-ls") then
-  lspconfig.solidity.setup {
-    on_attach = custom_attach,
-    capabilities = capabilities,
-  }
-end
-
-if utils.executable("clangd") then
-  lspconfig.clangd.setup {
-    on_attach = custom_attach,
-    capabilities = {
-      textDocument = {
-        semanticHighlightingCapabilities = {
-          semanticHighlighting = true
-        }
+  capabilities = {
+    textDocument = {
+      semanticHighlightingCapabilities = {
+        semanticHighlighting = true
       }
-    },
-    filetypes = { "c", "cpp", "cc" },
-  }
-end
+    }
+  },
+  filetypes = { "c", "cpp", "cc", "cuda", "cu" },
+})
+vim.lsp.enable('clangd')
 
 -- lspconfig.ltex.setup {
 --   on_attach = function(client, bufnr)
@@ -171,66 +146,53 @@ end
 --       },
 --     },
 --   },
---   filetypes = {},
+--   -- filetypes = {},
 --   -- flags = { debounce_text_changes = 300 },
 -- }
 
-if utils.executable("pyright") then
-  lspconfig.pyright.setup {
-    on_attach = custom_attach,
-    capabilities = capabilities,
-  }
-end
+-- lspconfig.ltex.setup {
+--   on_attach = custom_attach,
+--   capabilities = capabilities,
+-- }
 
--- set up vim-language-server
-if utils.executable("vim-language-server") then
-  lspconfig.vimls.setup {
-    on_attach = custom_attach,
-    flags = {
-      debounce_text_changes = 500,
-    },
-    capabilities = capabilities,
-  }
-end
 
--- set up bash-language-server
-if utils.executable("bash-language-server") then
-  lspconfig.bashls.setup {
-    on_attach = custom_attach,
-    capabilities = capabilities,
-  }
-end
+vim.lsp.config("vimls", { flags = { debounce_text_changes = 500, }, })
+vim.lsp.config("pyright", { flags = { debounce_text_changes = 200, }, })
 
-if utils.executable("lua-language-server") then
-  -- settings for lua-language-server can be found on https://github.com/LuaLS/lua-language-server/wiki/Settings .
-  lspconfig.lua_ls.setup {
-    on_attach = custom_attach,
-    settings = {
-      Lua = {
-        runtime = {
-          -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-          version = "LuaJIT",
+vim.lsp.enable('pyright')
+vim.lsp.enable('zls')
+vim.lsp.enable('vimls')
+vim.lsp.enable('bashls')
+
+-- settings for lua-language-server can be found on https://github.com/LuaLS/lua-language-server/wiki/Settings .
+vim.lsp.config('lua_ls', {
+  on_attach = custom_attach,
+  settings = {
+    Lua = {
+      runtime = {
+        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+        version = "LuaJIT",
+      },
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = { "vim" },
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files,
+        -- see also https://github.com/LuaLS/lua-language-server/wiki/Libraries#link-to-workspace .
+        -- Lua-dev.nvim also has similar settings for lua ls, https://github.com/folke/neodev.nvim/blob/main/lua/neodev/luals.lua .
+        library = {
+          fn.stdpath("data") .. "/site/pack/packer/opt/emmylua-nvim",
+          fn.stdpath("config"),
         },
-        diagnostics = {
-          -- Get the language server to recognize the `vim` global
-          globals = { "vim" },
-        },
-        workspace = {
-          -- Make the server aware of Neovim runtime files,
-          -- see also https://github.com/LuaLS/lua-language-server/wiki/Libraries#link-to-workspace .
-          -- Lua-dev.nvim also has similar settings for lua ls, https://github.com/folke/neodev.nvim/blob/main/lua/neodev/luals.lua .
-          library = {
-            fn.stdpath("data") .. "/site/pack/packer/opt/emmylua-nvim",
-            fn.stdpath("config"),
-          },
-          maxPreload = 2000,
-          preloadFileSize = 50000,
-        },
+        maxPreload = 2000,
+        preloadFileSize = 50000,
       },
     },
-    capabilities = capabilities,
-  }
-end
+  },
+  capabilities = capabilities,
+})
+vim.lsp.enable('lua_ls')
 
 -- global config for diagnostic
 diagnostic.config {

@@ -14,23 +14,28 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup {
   {
-    "williamboman/mason.nvim",
-    build = ":MasonUpdate", -- :MasonUpdate updates registry contents
-    config = function()
-      require('config.mason')
-    end,
+    "mason-org/mason-lspconfig.nvim",
+    opts = {
+      automatic_enable = {
+        exclude = {
+          "rust_analyzer",
+        }
+      }
+    },
+    dependencies = {
+      { "mason-org/mason.nvim", opts = {} },
+      "neovim/nvim-lspconfig",
+    },
   },
-  { "williamboman/mason-lspconfig.nvim" },
 
   { "hrsh7th/nvim-cmp",
     dependencies = {
-      "onsails/lspkind-nvim",
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-cmdline",
       "hrsh7th/cmp-omni",
       "hrsh7th/cmp-calc",
-      -- "quangnguyen30192/cmp-nvim-ultisnips",
     },
     config = function()
       require('config.nvim-cmp')
@@ -44,17 +49,29 @@ require("lazy").setup {
     end,
   },
 
-  -- {
-  --   "nvim-treesitter/nvim-treesitter",
-  --   event = "BufEnter",
-  --   build = ":TSUpdate",
-  --   config = function()
-  --     require('config.treesitter')
-  --   end,
-  -- },
-
-  { "simnalamburt/vim-mundo",
-    cmd = { "MundoToggle", "MundoShow" }
+  { "nvim-treesitter/nvim-treesitter", branch = 'master', lazy = false, build = ":TSUpdate",
+    config = function()
+      require("nvim-treesitter.configs").setup {
+        ensure_installed = {
+          "python",
+          "c",
+          "cpp",
+          "lua",
+          "json",
+          "comment",
+          "ocaml",
+        },
+        ignore_install = {}, -- List of parsers to ignore installing
+        indent = {
+          enable = true,
+          disable = { "rust", 'vim', 'vimdoc', 'markdown' },
+        },
+        highlight = {
+          enable = true,                               -- false will disable the whole extension
+          disable = { 'help', 'vim', 'vimdoc', 'markdown', 'rust' }, -- list of language that will be disabled
+        },
+      }
+    end,
   },
 
   {
@@ -78,14 +95,19 @@ require("lazy").setup {
     end,
   },
 
-  {
-    "nvim-lualine/lualine.nvim",
+  { "miikanissi/modus-themes.nvim", priority = 1000,
     config = function()
-      require('config.statusline')
-    end,
-  },
-
-  { "rebelot/kanagawa.nvim" },
+      require("modus-themes").setup({
+        styles = {
+          comments = { italic = false },
+          keywords = { italic = false },
+          functions = {},
+          variables = {},
+        },
+      })
+      vim.cmd("colorscheme modus_vivendi")
+      vim.api.nvim_set_hl(0, "@lsp.type.comment.cpp", { link = "Comment" })
+    end, },
 
   {
     "tpope/vim-fugitive",
@@ -97,53 +119,6 @@ require("lazy").setup {
     end,
   },
 
-  { "SirVer/ultisnips",
-    dependencies = { "honza/vim-snippets" },
-    event = "InsertEnter"
-  },
-
-  { "rhysd/vim-llvm" },
-
-  -- bugged
-  -- {
-  --   "folke/which-key.nvim",
-  --   config = function()
-  --     vim.o.timeout = true
-  --     vim.o.timeoutlen = 300
-  --     require('config.which-key')
-  --   end
-  -- },
-
-  {
-    "folke/zen-mode.nvim",
-    keys = { { "<leader>g", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
-  },
-
-  {
-    "folke/trouble.nvim",
-    cmd = "Trouble",
-    keys = { { "<space>e", "<cmd> Trouble diagnostics toggle<cr>", desc = "Diagnostics (Trouble)" } },
-    opts = {},
-  },
-
-  {
-    "mhartington/formatter.nvim",
-    config = function() require('config.formatter-nvim') end,
-    cmd = { "Format", "FormatWrite" },
-  },
-
-  {
-    'phaazon/hop.nvim',
-    branch = 'v2', -- optional but strongly recommended
-    config = function() require('config.hop') end,
-  },
-
-  { "gelguy/wilder.nvim" },
-
-  { "numToStr/Comment.nvim",
-    opts = {}
-  },
-
   { "jamessan/vim-gnupg" },
 
   { "lervag/vimtex",      ft = "tex" },
@@ -151,8 +126,9 @@ require("lazy").setup {
   { "rust-lang/rust.vim", ft = "rust" },
 
   {
-    "simrat39/rust-tools.nvim",
-    ft = "rust",
+    'mrcjkb/rustaceanvim',
+    version = '^6', -- Recommended
+    lazy = false,   -- This plugin is already lazy
     config = function() require('config.rust-tools') end,
   },
 
@@ -176,12 +152,12 @@ require("lazy").setup {
     },
   },
 
-  { "neovimhaskell/haskell-vim", ft = "haskell" },
-
   {
     "lewis6991/gitsigns.nvim",
-    event = "User InGitRepo",
-    cmd = { "Gitsigns" },
+    -- event = "User InGitRepo",
+    -- cmd = "GitSigns",
+    -- FIXME User InGitRepo never fires
+    priority = 0,
     config = function()
       require('gitsigns').setup()
     end
@@ -195,10 +171,8 @@ require("lazy").setup {
     end
   },
 
-  "andymass/vim-matchup",
-  { "dbmrq/vim-ditto",
-    cmd = { "Ditto" }
-  },
+  -- massively degrades performance on markdown files, wth?
+  -- "andymass/vim-matchup",
 
   {
     "dstein64/vim-startuptime",
@@ -209,16 +183,4 @@ require("lazy").setup {
       vim.g.startuptime_tries = 10
     end,
   },
-
-  -- {
-  --   "jhofscheier/ltex-utils.nvim",
-  --   dependencies = {
-  --     "neovim/nvim-lspconfig",
-  --     "nvim-telescope/telescope.nvim",
-  --   },
-  --   opts = {},
-  -- },
-
-  -- rarely used stuff:
-  -- "whonore/Coqtail",
 }
